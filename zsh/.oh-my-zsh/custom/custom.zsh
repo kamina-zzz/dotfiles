@@ -14,6 +14,9 @@ function cd() {
   builtin cd $@ && ll;
 }
 
+# [opencode]
+export PATH=$HOME/.opencode/bin:$PATH
+
 # load local settings
 if [ -f ~/.local.zsh ]; then
 	. ~/.local.zsh
