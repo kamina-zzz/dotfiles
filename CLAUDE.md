@@ -41,8 +41,8 @@ mise install
 ```
 
 ### Package Management
-- Homebrew packages, casks, and VS Code extensions are defined in `brew/Brewfile`
-- Use `brew bundle --file brew/Brewfile` to install or update packages
+- Homebrew packages, casks, and VS Code extensions are defined in `.brew/Brewfile`
+- Use `brew bundle --file .brew/Brewfile` to install or update packages
 
 ## Repository Structure
 
@@ -93,8 +93,8 @@ When modifying configurations:
 ### Adding New Tools
 
 To add new packages:
-1. Add to `brew/Brewfile` under appropriate section (brew/cask/vscode)
-2. Run `brew bundle --file brew/Brewfile` to install
+1. Add to `.brew/Brewfile` under appropriate section (brew/cask/vscode)
+2. Run `brew bundle --file .brew/Brewfile` to install
 3. Add configuration files in appropriate directory if needed
 4. Use `stow` to create symlinks if new configuration directory is added
 

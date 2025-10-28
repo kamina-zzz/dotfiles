@@ -7,7 +7,7 @@
 ```
 
 This script will:
-1. Install all packages from `brew/Brewfile`
+1. Install all packages from `.brew/Brewfile`
 2. Install oh-my-zsh
 3. Create symlinks using GNU Stow for: zsh, git, mise, claude
 4. Install mise tools
@@ -19,7 +19,7 @@ If you prefer to install manually:
 
 ```bash
 # Install packages
-brew bundle --file brew/Brewfile
+brew bundle --file .brew/Brewfile
 
 # Install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"

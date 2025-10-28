@@ -39,7 +39,7 @@ fi
 
 # Install packages from Brewfile
 echo_info "Installing packages from Brewfile..."
-brew bundle --file "$DOTFILES_DIR/brew/Brewfile"
+brew bundle --file "$DOTFILES_DIR/.brew/Brewfile"
 
 # Check if stow is installed
 if ! command -v stow &> /dev/null; then
@@ -70,12 +70,12 @@ backup_if_exists() {
 backup_if_exists "$HOME/.zshrc"
 backup_if_exists "$HOME/.gitconfig"
 
-# Stow packages - auto-detect directories (exclude .git and brew)
+# Stow packages - auto-detect directories (exclude hidden directories)
 PACKAGES=()
 for dir in "$DOTFILES_DIR"/*/; do
     dir_name=$(basename "$dir")
-    # Exclude hidden directories (like .git) and brew (not a stow package)
-    if [[ "$dir_name" != .* && "$dir_name" != "brew" ]]; then
+    # Exclude hidden directories (like .git and .brew)
+    if [[ "$dir_name" != .* ]]; then
         PACKAGES+=("$dir_name")
     fi
 done
