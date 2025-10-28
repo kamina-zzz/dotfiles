@@ -338,7 +338,7 @@
       }
     ]
   },
-  "alwaysThinkingEnabled": false,
+  "alwaysThinkingEnabled": true,
   "feedbackSurveyState": {
     "lastShownTime": 1759330183872
   }
