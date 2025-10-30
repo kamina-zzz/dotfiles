@@ -2,6 +2,8 @@
   useConfigOnly = true
   email = kamina.dev1991@gmail.com
   name = kamina-zzz
+[core]
+  pager = less -X
 [color]
   ui = auto
 [diff]
