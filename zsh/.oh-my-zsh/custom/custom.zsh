@@ -1,3 +1,17 @@
+# aliases
+unalias gg
+unalias gga
+alias gg='git grep -in --break'
+alias c='cursor .'
+alias cl='claude --dangerously-skip-permissions'
+
+# functions
+
+# after cd command, execute l
+function cd() {
+  builtin cd $@ && l;
+}
+
 # [ghq]
 function repo { cd $(ghq list -p | fzf -q ""$@"") }
 
@@ -9,10 +23,8 @@ function kclone() {
   clone kamina-zzz/$@;
 }
 
-# after cd command, execute ll
-function cd() {
-  builtin cd $@ && ll;
-}
+# [GKE]
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 
 # [opencode]
 export PATH=$HOME/.opencode/bin:$PATH
