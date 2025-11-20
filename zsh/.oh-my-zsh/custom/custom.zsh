@@ -2,6 +2,8 @@
 unalias gg
 unalias gga
 alias gg='git grep -in --break'
+alias gps='git push origin HEAD'
+
 alias c='cursor .'
 alias cl='claude --dangerously-skip-permissions'
 
@@ -13,7 +15,9 @@ function cd() {
 }
 
 # [ghq]
-function repo { cd $(ghq list -p | fzf -q ""$@"") }
+function repo() {
+  cd $(ghq list -p | fzf -q ""$@"")
+}
 
 function clone() {
   ghq get -p $@ && cd $(ghq list -p | grep $@);
