@@ -14,3 +14,4 @@ source $ZSH/oh-my-zsh.sh
 export EDITOR=vim
 export LANG=ja_JP.UTF-8
 PATH=$PATH:$HOME/bin
+PATH=$PATH:$HOME/.local/bin

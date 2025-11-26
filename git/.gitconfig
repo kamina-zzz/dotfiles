@@ -10,3 +10,5 @@
   compactionHeuristic = true
 [ghq]
   root = ~/src/
+[init]
+	defaultBranch = main
