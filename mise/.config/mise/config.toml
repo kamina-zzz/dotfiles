@@ -1,4 +1,6 @@
 [tools]
+ghq = "latest"
 node = "22"
 pnpm = "10.23.0"
+ruby = "4"
 usage = "latest"
