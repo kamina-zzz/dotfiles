@@ -1,6 +1,6 @@
 # oh-my-zsh
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="kamina"
+ZSH_THEME=""
 zstyle ':omz:update' mode auto
 zstyle ':omz:update' frequency 13
 COMPLETION_WAITING_DOTS="true"

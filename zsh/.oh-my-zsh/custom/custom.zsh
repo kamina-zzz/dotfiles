@@ -1,20 +1,28 @@
-# aliases
+# ENV
+## [GKE]
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
+# PATH
+## [opencode]
+export PATH=$HOME/.opencode/bin:$PATH
+
+# ALIASES
 unalias gg
 unalias gga
 alias gg='git grep -in --break'
 alias gps='git push origin HEAD'
 
 alias c='cursor .'
-alias cl='claude --dangerously-skip-permissions'
+alias cl='claude'
 
-# functions
+# FUNCTIONS
 
-# after cd command, execute l
+## after cd command, execute l
 function cd() {
   builtin cd $@ && l;
 }
 
-# [ghq]
+## [ghq]
 function repo() {
   cd $(ghq list -p | fzf -q ""$@"")
 }
@@ -27,11 +35,8 @@ function kclone() {
   clone kamina-zzz/$@;
 }
 
-# [GKE]
-export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-
-# [opencode]
-export PATH=$HOME/.opencode/bin:$PATH
+# status line
+eval "$(starship init zsh)"
 
 # load local settings
 if [ -f ~/.local.zsh ]; then
