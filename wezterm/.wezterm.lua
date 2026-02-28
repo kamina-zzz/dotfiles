@@ -7,6 +7,7 @@ local config = wezterm.config_builder()
 -- This is where you actually apply your config choices.
 config.color_scheme = 'iceberg-dark'
 
+config.font = wezterm.font('JetBrainsMono Nerd Font Mono')
 config.automatically_reload_config = true
 config.font_size = 12.0
 config.use_ime = true
