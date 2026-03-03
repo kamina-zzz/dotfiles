@@ -2,16 +2,14 @@
 return {
   "nvim-focus/focus.nvim",
   event = "VeryLazy",
-  config = function()
-    require("focus").setup({
+  opts = {
+    enable = true,
+    autoresize = {
       enable = true,
-      autoresize = {
-        enable = true,
-        width = 0,
-        height = 0,
-        minwidth = 20,
-        minheight = 5,
-      },
-    })
-  end,
+      width = 0,
+      height = 0,
+      minwidth = 20,
+      minheight = 5,
+    },
+  },
 }

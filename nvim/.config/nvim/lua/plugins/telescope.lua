@@ -9,16 +9,14 @@ return {
     { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Find buffers" },
     { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help tags" },
   },
-  config = function()
-    require("telescope").setup({
-      defaults = {
-        mappings = {
-          i = {
-            ["<C-j>"] = "move_selection_next",
-            ["<C-k>"] = "move_selection_previous",
-          },
+  opts = {
+    defaults = {
+      mappings = {
+        i = {
+          ["<C-j>"] = "move_selection_next",
+          ["<C-k>"] = "move_selection_previous",
         },
       },
-    })
-  end,
+    },
+  },
 }
