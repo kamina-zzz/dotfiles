@@ -2,39 +2,31 @@
 return {
   {
     "williamboman/mason.nvim",
-    config = function()
-      require("mason").setup({
-        ui = {
-          border = "rounded",
-          icons = {
-            package_installed = "✓",
-            package_pending = "➜",
-            package_uninstalled = "✗",
-          },
+    opts = {
+      ui = {
+        border = "rounded",
+        icons = {
+          package_installed = "✓",
+          package_pending = "➜",
+          package_uninstalled = "✗",
         },
-      })
-    end,
+      },
+    },
   },
   {
     "williamboman/mason-lspconfig.nvim",
-    dependencies = { "mason.nvim" },
-    config = function()
-      require("mason-lspconfig").setup({
-        ensure_installed = {
-          "gopls",
-          "ts_ls",
-          "lua_ls",
-        },
-        automatic_installation = true,
-      })
-    end,
-  },
-  {
-    "neovim/nvim-lspconfig",
-    dependencies = { "mason-lspconfig.nvim" },
-    event = { "BufReadPre", "BufNewFile" },
-    config = function()
-      local lspconfig = require("lspconfig")
+    dependencies = { "mason.nvim", "nvim-lspconfig" },
+    opts = {
+      ensure_installed = {
+        "gopls",
+        "ts_ls",
+        "lua_ls",
+      },
+      automatic_installation = true,
+    },
+    config = function(_, opts)
+      local mason_lspconfig = require("mason-lspconfig")
+      mason_lspconfig.setup(opts)
 
       -- Diagnostic settings
       vim.diagnostic.config({
@@ -54,68 +46,83 @@ return {
 
       -- LSP keybindings
       local on_attach = function(client, bufnr)
-        local opts = { buffer = bufnr, silent = true }
+        local map = function(mode, lhs, rhs, desc)
+          vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, silent = true, desc = desc })
+        end
 
-        vim.keymap.set("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", opts, { desc = "Go to definition" }))
-        vim.keymap.set("n", "gr", vim.lsp.buf.references, vim.tbl_extend("force", opts, { desc = "Go to references" }))
-        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", opts, { desc = "Go to declaration" }))
-        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, vim.tbl_extend("force", opts, { desc = "Go to implementation" }))
-        vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, vim.tbl_extend("force", opts, { desc = "Go to type definition" }))
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "Hover documentation" }))
-        vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, vim.tbl_extend("force", opts, { desc = "Signature help" }))
-        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, vim.tbl_extend("force", opts, { desc = "Code action" }))
-        vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "Rename" }))
-        vim.keymap.set("n", "<leader>f", function()
+        map("n", "gd", vim.lsp.buf.definition, "Go to definition")
+        map("n", "gr", vim.lsp.buf.references, "Go to references")
+        map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
+        map("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
+        map("n", "gt", vim.lsp.buf.type_definition, "Go to type definition")
+        map("n", "K", vim.lsp.buf.hover, "Hover documentation")
+        map("n", "<C-k>", vim.lsp.buf.signature_help, "Signature help")
+        map("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
+        map("n", "<leader>rn", vim.lsp.buf.rename, "Rename")
+        map("n", "<leader>f", function()
           vim.lsp.buf.format({ async = true })
-        end, vim.tbl_extend("force", opts, { desc = "Format" }))
+        end, "Format")
       end
 
       -- Capabilities for nvim-cmp
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      -- Go
-      lspconfig.gopls.setup({
-        on_attach = on_attach,
-        capabilities = capabilities,
-        settings = {
-          gopls = {
-            analyses = {
-              unusedparams = true,
-            },
-            staticcheck = true,
-            gofumpt = true,
-          },
-        },
-      })
+      -- Setup handlers for automatic LSP configuration
+      mason_lspconfig.setup_handlers({
+        -- Default handler
+        function(server_name)
+          require("lspconfig")[server_name].setup({
+            on_attach = on_attach,
+            capabilities = capabilities,
+          })
+        end,
 
-      -- TypeScript/JavaScript
-      lspconfig.ts_ls.setup({
-        on_attach = on_attach,
-        capabilities = capabilities,
-      })
+        -- Custom handler for gopls
+        ["gopls"] = function()
+          require("lspconfig").gopls.setup({
+            on_attach = on_attach,
+            capabilities = capabilities,
+            settings = {
+              gopls = {
+                analyses = {
+                  unusedparams = true,
+                },
+                staticcheck = true,
+                gofumpt = true,
+              },
+            },
+          })
+        end,
 
-      -- Lua
-      lspconfig.lua_ls.setup({
-        on_attach = on_attach,
-        capabilities = capabilities,
-        settings = {
-          Lua = {
-            runtime = {
-              version = "LuaJIT",
+        -- Custom handler for lua_ls
+        ["lua_ls"] = function()
+          require("lspconfig").lua_ls.setup({
+            on_attach = on_attach,
+            capabilities = capabilities,
+            settings = {
+              Lua = {
+                runtime = {
+                  version = "LuaJIT",
+                },
+                diagnostics = {
+                  globals = { "vim" },
+                },
+                workspace = {
+                  library = vim.api.nvim_get_runtime_file("", true),
+                  checkThirdParty = false,
+                },
+                telemetry = {
+                  enable = false,
+                },
+              },
             },
-            diagnostics = {
-              globals = { "vim" },
-            },
-            workspace = {
-              library = vim.api.nvim_get_runtime_file("", true),
-              checkThirdParty = false,
-            },
-            telemetry = {
-              enable = false,
-            },
-          },
-        },
+          })
+        end,
       })
     end,
+  },
+  {
+    "neovim/nvim-lspconfig",
+    lazy = true,
   },
 }
