@@ -27,6 +27,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    version = false,
     dependencies = { "mason-lspconfig.nvim", "hrsh7th/cmp-nvim-lsp" },
     event = { "BufReadPre", "BufNewFile" },
     config = function()
@@ -70,9 +71,19 @@ return {
       })
 
       -- Capabilities for nvim-cmp
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+      local capabilities = vim.tbl_deep_extend(
+        "force",
+        {},
+        vim.lsp.protocol.make_client_capabilities(),
+        has_cmp and cmp_nvim_lsp.default_capabilities() or {}
+      )
 
-      local lspconfig = require("lspconfig")
+      -- Check if lspconfig is available and setup servers
+      local has_lspconfig, lspconfig = pcall(require, "lspconfig")
+      if not has_lspconfig then
+        return
+      end
 
       -- Go
       lspconfig.gopls.setup({
