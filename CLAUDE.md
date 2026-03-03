@@ -31,10 +31,14 @@ brew bundle --file brew/Brewfile
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Create symlinks for specific configurations
-stow -t ~/ zsh      # Install zsh configuration
-stow -t ~/ git      # Install git configuration
-stow -t ~/ mise     # Install mise configuration
-stow -t ~/ claude   # Install claude configuration
+stow -t ~/ zsh       # Install zsh configuration
+stow -t ~/ git       # Install git configuration
+stow -t ~/ mise      # Install mise configuration
+stow -t ~/ claude    # Install claude configuration
+stow -t ~/ starship  # Install starship prompt configuration
+stow -t ~/ gh        # Install GitHub CLI configuration
+stow -t ~/ wezterm   # Install wezterm terminal configuration
+stow -t ~/ tmux      # Install tmux configuration
 
 # Install mise tools
 mise install
@@ -47,7 +51,7 @@ mise install
 ## Repository Structure
 
 The repository uses GNU Stow's directory structure pattern:
-- Each top-level directory (zsh, git, mise, claude) represents a "stow package"
+- Each top-level directory (zsh, git, mise, claude, starship, gh, wezterm, tmux) represents a "stow package"
 - Files within these directories mirror the target location structure (typically `~/`)
 - Running `stow -t ~/ <package>` creates symlinks from `~/` to files in the package directory
 
@@ -55,14 +59,17 @@ The repository uses GNU Stow's directory structure pattern:
 
 **zsh/** - Zsh shell configuration
 - `.zshrc`: Main zsh configuration with oh-my-zsh setup
-  - Theme: robbyrussell
-  - Plugins: git, fzf, mise
+  - Theme: disabled (uses starship prompt instead)
+  - Plugins: git, fzf, mise, gcloud, kubectl, kubectx
   - Environment: EDITOR=vim, LANG=ja_JP.UTF-8
-- `.oh-my-zsh/custom/custom.zsh`: Custom functions and aliases
+- `.oh-my-zsh/custom/custom.zsh`: Custom functions, aliases, and environment
   - `repo`: Navigate to repositories using fzf
   - `clone`: Clone and navigate using ghq
   - `kclone`: Clone kamina-zzz repositories
-  - Auto-execute `ll` after `cd`
+  - `c`: Open current directory in Cursor
+  - `cl`: Run claude
+  - Auto-execute `l` after `cd`
+  - Initializes starship prompt
   - Loads `~/.local.zsh` if present for machine-specific settings
 
 **git/** - Git configuration
@@ -72,8 +79,32 @@ The repository uses GNU Stow's directory structure pattern:
 
 **mise/** - Mise (runtime version manager) configuration
 - `.config/mise/config.toml`: Tool versions
+  - ghq: latest
   - node: 22
+  - pnpm: 10.23.0
+  - ruby: 4
   - usage: latest
+
+**starship/** - Starship prompt configuration
+- `.config/starship.toml`: Custom prompt format
+  - Custom format with username, directory, git branch/status
+  - Directory truncation length: 4
+  - Git branch and status indicators
+
+**gh/** - GitHub CLI configuration
+- `.config/gh/config.yml`: GitHub CLI settings
+  - Git protocol: https
+  - Aliases: `co` → `pr checkout`
+
+**wezterm/** - WezTerm terminal emulator configuration
+- `.wezterm.lua`: Terminal settings
+  - Color scheme: iceberg-dark
+  - Font: JetBrainsMono Nerd Font Mono (size 12)
+  - IME enabled
+  - Leader key: Ctrl+Shift+S
+  - Custom keybinds for command palette, copy mode
+
+**tmux/** - Tmux terminal multiplexer configuration
 
 **claude/** - Claude Code configuration
 - `.claude/settings.json`: Claude Code settings
@@ -109,9 +140,10 @@ This repository uses ghq for repository management:
 ## Key Tools and Commands
 
 - **stow**: Symlink management (`stow -t ~/ <package>`)
-- **brew**: Package management (`brew bundle --file brew/Brewfile`)
+- **brew**: Package management (`brew bundle --file .brew/Brewfile`)
 - **ghq**: Repository management (configured to use `~/src/`)
 - **fzf**: Fuzzy finder (used in custom functions)
-- **mise**: Runtime version manager (manages node, etc.)
+- **mise**: Runtime version manager (manages ghq, node, pnpm, ruby)
+- **starship**: Cross-shell prompt
 - **oh-my-zsh**: Zsh framework with plugins
-- to memorize
+- **wezterm**: GPU-accelerated terminal emulator
