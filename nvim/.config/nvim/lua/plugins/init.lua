@@ -1,5 +1,5 @@
 -- Plugins initialization
-return {
+require("lazy").setup({
   -- Import all plugin specs
   { import = "plugins.colorscheme" },
   { import = "plugins.treesitter" },
@@ -21,4 +21,17 @@ return {
   { import = "plugins.focus" },
   { import = "plugins.markdown" },
   { import = "plugins.sleuth" },
-}
+}, {
+  checker = { enabled = true },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
+  },
+})
