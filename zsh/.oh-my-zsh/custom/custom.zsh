@@ -15,6 +15,10 @@ alias gps='git push origin HEAD'
 alias c='cursor .'
 alias cl='claude'
 
+alias vi='nvim'
+alias vim='nvim'
+alias v='nvim'
+
 # FUNCTIONS
 
 ## after cd command, execute l
