@@ -9,7 +9,7 @@
 This script will:
 1. Install all packages from `.brew/Brewfile`
 2. Install oh-my-zsh
-3. Create symlinks using GNU Stow for: zsh, git, mise, claude
+3. Create symlinks using GNU Stow for all configuration packages (zsh, git, mise, claude, starship, gh, wezterm, tmux)
 4. Install mise tools
 5. Change default shell to zsh
 
@@ -29,6 +29,10 @@ stow -t ~/ zsh
 stow -t ~/ git
 stow -t ~/ mise
 stow -t ~/ claude
+stow -t ~/ starship
+stow -t ~/ gh
+stow -t ~/ wezterm
+stow -t ~/ tmux
 
 # Install mise tools
 mise install
