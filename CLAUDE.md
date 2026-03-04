@@ -163,6 +163,10 @@ This repository uses ghq for repository management:
 - Use `repo` to fuzzy-find and navigate to existing repositories
 - Use `kclone <repo-name>` for kamina-zzz repositories
 
+### Plan Files
+
+When working in plan mode, create plan files in the `plan/` directory within the current working directory.
+
 ## Key Tools and Commands
 
 - **stow**: Symlink management (`stow -t ~/ <package>`)
