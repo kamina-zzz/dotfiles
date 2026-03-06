@@ -27,7 +27,7 @@ opt.smartindent = true
 
 -- UI
 opt.termguicolors = true
-opt.signcolumn = "yes"
+opt.signcolumn = "yes:2"
 opt.scrolloff = 8
 opt.wrap = false
 
