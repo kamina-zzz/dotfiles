@@ -11,4 +11,9 @@
 [ghq]
   root = ~/src/
 [init]
-	defaultBranch = main
+  defaultBranch = main
+[url "https://"]
+  insteadOf = git://
+[url "https://github.com/"]
+  insteadOf = ssh://git@github.com/
+  insteadOf = git@github.com:
