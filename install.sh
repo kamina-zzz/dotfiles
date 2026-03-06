@@ -74,8 +74,8 @@ backup_if_exists "$HOME/.gitconfig"
 PACKAGES=()
 for dir in "$DOTFILES_DIR"/*/; do
     dir_name=$(basename "$dir")
-    # Exclude hidden directories (like .git and .brew)
-    if [[ "$dir_name" != .* ]]; then
+    # Exclude hidden directories (like .git and .brew) and local (git-ignored, stow manually)
+    if [[ "$dir_name" != .* ]] && [[ "$dir_name" != "local" ]]; then
         PACKAGES+=("$dir_name")
     fi
 done

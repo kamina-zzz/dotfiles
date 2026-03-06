@@ -34,7 +34,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 stow -t ~/ zsh       # Install zsh configuration
 stow -t ~/ git       # Install git configuration
 stow -t ~/ mise      # Install mise configuration
-stow -t ~/ claude    # Install claude configuration
 stow -t ~/ starship  # Install starship prompt configuration
 stow -t ~/ gh        # Install GitHub CLI configuration
 stow -t ~/ wezterm   # Install wezterm terminal configuration
@@ -52,9 +51,17 @@ mise install
 ## Repository Structure
 
 The repository uses GNU Stow's directory structure pattern:
-- Each top-level directory (zsh, git, mise, claude, starship, gh, wezterm, tmux, nvim) represents a "stow package"
+- Each top-level directory (zsh, git, mise, starship, gh, wezterm, tmux, nvim) represents a "stow package"
 - Files within these directories mirror the target location structure (typically `~/`)
 - Running `stow -t ~/ <package>` creates symlinks from `~/` to files in the package directory
+
+### Local (Confidential) Settings
+
+The `local/` directory is a special stow package for machine-specific or confidential configurations:
+- All files in `local/` are git-ignored (only `.keep` is tracked)
+- Use this for settings containing secrets, project IDs, API keys, etc.
+- Must be stowed manually: `stow -t ~/ local` (excluded from `install.sh` auto-detection)
+- Directory structure mirrors `~/` just like other stow packages (e.g. `local/.claude/settings.json`, `local/.local.zsh`)
 
 ### Configuration Areas
 
@@ -131,12 +138,6 @@ The repository uses GNU Stow's directory structure pattern:
   - Auto-format on save: enabled for TS/JS (Prettier) and Go (goimports)
   - Clipboard: OSC 52 for iOS sharing
   - Tab detection: vim-sleuth (auto-detect per file)
-
-**claude/** - Claude Code configuration
-- `.claude/settings.json`: Claude Code settings
-  - Vertex AI integration enabled
-  - Custom completion sound/notification on stop
-  - Extended bash timeout: 300s default, 1200s max
 
 ## Development Workflow
 
