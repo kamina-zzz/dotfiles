@@ -27,7 +27,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    version = false,
+    version = "v2.2.0", -- Pin to v2 to avoid v3 deprecation warnings
     dependencies = { "mason-lspconfig.nvim", "hrsh7th/cmp-nvim-lsp" },
     event = { "BufReadPre", "BufNewFile" },
     config = function()
@@ -79,11 +79,8 @@ return {
         has_cmp and cmp_nvim_lsp.default_capabilities() or {}
       )
 
-      -- Check if lspconfig is available and setup servers
-      local has_lspconfig, lspconfig = pcall(require, "lspconfig")
-      if not has_lspconfig then
-        return
-      end
+      -- Setup LSP servers
+      local lspconfig = require("lspconfig")
 
       -- Go
       lspconfig.gopls.setup({
