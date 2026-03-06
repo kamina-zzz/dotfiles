@@ -1,25 +1,11 @@
 -- Options configuration
 local opt = vim.opt
 
--- Clipboard (OSC 52 for iOS sharing)
+-- Clipboard (use macOS system clipboard)
 opt.clipboard = "unnamedplus"
-
--- OSC 52 clipboard configuration
-vim.g.clipboard = {
-  name = "OSC 52",
-  copy = {
-    ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-    ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
-  },
-  paste = {
-    ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
-    ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
-  },
-}
 
 -- Line numbers
 opt.number = true
-opt.relativenumber = true
 
 -- Mouse
 opt.mouse = "a"
@@ -48,10 +34,14 @@ opt.wrap = false
 -- Split windows
 opt.splitbelow = true
 opt.splitright = true
+opt.equalalways = false
 
 -- Undo
 opt.undofile = true
 opt.undolevels = 10000
+
+-- Disable swap files
+opt.swapfile = false
 
 -- Update time
 opt.updatetime = 200
