@@ -17,6 +17,23 @@ return {
           ["<C-k>"] = "move_selection_previous",
         },
       },
+      vimgrep_arguments = {
+        "rg",
+        "--color=never",
+        "--no-heading",
+        "--with-filename",
+        "--line-number",
+        "--column",
+        "--smart-case",
+        "--hidden", -- 隠しファイルも検索
+        "--glob=!.git/", -- .git ディレクトリは除外
+      },
+    },
+    pickers = {
+      find_files = {
+        hidden = true, -- 隠しファイル・ディレクトリも検索
+        find_command = { "rg", "--files", "--hidden", "--glob", "!.git/" },
+      },
     },
   },
 }
