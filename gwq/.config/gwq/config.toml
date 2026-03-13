@@ -2,4 +2,4 @@
 template = '{{.Host}}/{{.Owner}}/{{.Repository}}={{.Branch}}'
 
 [worktree]
-basedir = '~/ghq'
+basedir = '~/src/'
