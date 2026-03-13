@@ -3,3 +3,6 @@ template = '{{.Host}}/{{.Owner}}/{{.Repository}}={{.Branch}}'
 
 [worktree]
 basedir = '~/src/'
+
+[cd]
+launch_shell = false
