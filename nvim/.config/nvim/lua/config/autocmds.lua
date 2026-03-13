@@ -57,3 +57,42 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
   end,
   desc = "Open nvim-tree on startup",
 })
+
+-- Auto-delete empty unnamed buffers when opening a real file
+vim.api.nvim_create_autocmd("BufReadPost", {
+  callback = function()
+    -- Don't run for telescope or other special buffers
+    local ft = vim.bo.filetype
+    if ft == "TelescopePrompt" or ft == "TelescopeResults" or ft == "NvimTree" then
+      return
+    end
+
+    -- Get list of all buffers
+    local buffers = vim.api.nvim_list_bufs()
+
+    -- Find empty unnamed buffers
+    for _, buf in ipairs(buffers) do
+      if vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_buf_is_loaded(buf) then
+        local name = vim.api.nvim_buf_get_name(buf)
+        local buf_ft = vim.bo[buf].filetype
+
+        -- Skip special buffers
+        if buf_ft == "TelescopePrompt" or buf_ft == "TelescopeResults" or buf_ft == "NvimTree" then
+          goto continue
+        end
+
+        local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+        local is_empty = #lines == 1 and lines[1] == ""
+        local is_modified = vim.bo[buf].modified
+
+        -- Delete if: unnamed, empty, unmodified, and not current buffer
+        if name == "" and is_empty and not is_modified and buf ~= vim.api.nvim_get_current_buf() then
+          pcall(vim.api.nvim_buf_delete, buf, { force = false })
+        end
+
+        ::continue::
+      end
+    end
+  end,
+  desc = "Auto-delete empty unnamed buffers",
+})

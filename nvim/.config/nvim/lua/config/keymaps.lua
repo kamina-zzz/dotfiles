@@ -25,7 +25,26 @@ vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "Find
 -- Buffer navigation
 vim.keymap.set("n", "<S-h>", ":bprevious<CR>", { silent = true, desc = "Previous buffer" })
 vim.keymap.set("n", "<S-l>", ":bnext<CR>", { silent = true, desc = "Next buffer" })
-vim.keymap.set("n", "<leader>bd", ":bdelete<CR>", { silent = true, desc = "Delete buffer" })
+vim.keymap.set("n", "<leader>bd", function()
+  local buf = vim.api.nvim_get_current_buf()
+  -- 次のバッファに移動してから削除
+  vim.cmd("bnext")
+  -- 移動できなかった場合（最後のバッファ）は前のバッファへ
+  if buf == vim.api.nvim_get_current_buf() then
+    vim.cmd("bprevious")
+  end
+  -- 元のバッファを削除
+  vim.cmd("bdelete " .. buf)
+end, { silent = true, desc = "Delete buffer" })
+vim.keymap.set("n", "<leader>bD", function()
+  local current = vim.api.nvim_get_current_buf()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if buf ~= current and vim.api.nvim_buf_is_loaded(buf) then
+      vim.cmd("bdelete " .. buf)
+    end
+  end
+end, { silent = true, desc = "Delete all buffers except current" })
+vim.keymap.set("n", "<leader>bx", ":%bd<CR>", { silent = true, desc = "Delete all buffers" })
 
 -- Better indenting
 vim.keymap.set("v", "<", "<gv", { desc = "Indent left" })

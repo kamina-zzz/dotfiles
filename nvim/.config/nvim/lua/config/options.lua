@@ -29,7 +29,9 @@ opt.smartindent = true
 opt.termguicolors = true
 opt.signcolumn = "yes:2"
 opt.scrolloff = 8
-opt.wrap = false
+opt.wrap = true
+opt.linebreak = true
+opt.breakindent = true
 
 -- Split windows
 opt.splitbelow = true
