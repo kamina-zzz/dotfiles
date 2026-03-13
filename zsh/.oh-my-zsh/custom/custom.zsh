@@ -26,6 +26,19 @@ function cd() {
   builtin cd $@ && l;
 }
 
+## [gwq]
+function clf() {
+  local branch="feat/$@"
+  if gwq get "$branch" &>/dev/null; then
+    : # worktree already exists
+  elif git show-ref --verify --quiet "refs/heads/$branch"; then
+    gwq add "$branch"
+  else
+    gwq add -b "$branch"
+  fi
+  gwq cd "$branch" && claude
+}
+
 ## [ghq]
 function repo() {
   cd $(ghq list -p | fzf -q ""$@"")
@@ -38,6 +51,11 @@ function clone() {
 function kclone() {
   clone kamina-zzz/$@;
 }
+
+# COMPLETION
+
+## [gwq]
+source <(gwq completion zsh)
 
 # status line
 eval "$(starship init zsh)"
