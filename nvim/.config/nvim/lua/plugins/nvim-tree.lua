@@ -14,6 +14,9 @@ return {
     local WIDTH = 50
 
     require("nvim-tree").setup({
+      update_focused_file = {
+        enable = true,
+      },
       view = {
         width = WIDTH,
         preserve_window_proportions = true,
