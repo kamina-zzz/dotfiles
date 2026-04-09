@@ -13,7 +13,7 @@ alias gg='git grep -in --break'
 alias gps='git push origin HEAD'
 
 alias c='cursor .'
-alias cl='claude'
+alias cl='claude --enable-auto-mode'
 
 alias vi='nvim'
 alias vim='nvim'
