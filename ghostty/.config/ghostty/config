@@ -1,0 +1,5 @@
+font-family = JetBrainsMono Nerd Font
+font-size = 13
+theme = Iceberg Dark
+scrollback-limit = 50000000
+macos-option-as-alt = true
