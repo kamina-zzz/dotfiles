@@ -39,6 +39,8 @@ stow -t ~/ gh        # Install GitHub CLI configuration
 stow -t ~/ wezterm   # Install wezterm terminal configuration
 stow -t ~/ tmux      # Install tmux configuration
 stow -t ~/ nvim      # Install neovim configuration
+stow -t ~/ cmux      # Install cmux configuration
+stow -t ~/ ghostty   # Install ghostty configuration
 
 # Install mise tools
 mise install
@@ -51,7 +53,7 @@ mise install
 ## Repository Structure
 
 The repository uses GNU Stow's directory structure pattern:
-- Each top-level directory (zsh, git, mise, starship, gh, wezterm, tmux, nvim) represents a "stow package"
+- Each top-level directory (zsh, git, mise, starship, gh, wezterm, tmux, nvim, cmux, ghostty) represents a "stow package"
 - Files within these directories mirror the target location structure (typically `~/`)
 - Running `stow -t ~/ <package>` creates symlinks from `~/` to files in the package directory
 
@@ -112,6 +114,22 @@ The `local/` directory is a special stow package for machine-specific or confide
   - IME enabled
   - Leader key: Ctrl+Shift+S
   - Custom keybinds for command palette, copy mode
+
+**cmux/** - cmux terminal (Ghostty-based, AI coding agent oriented) configuration
+- `.config/cmux/settings.json`: cmux settings (schemaVersion 1)
+  - `app.language` / `app.appearance`: system (follow OS)
+  - `app.preferredEditor`: nvim
+  - `app.openMarkdownInCmuxViewer`: true
+  - `automation.claudeCodeIntegration`: true (Claude Code hooks enabled)
+  - `sidebar.showPullRequests`: true
+  - `browser.defaultSearchEngine`: google
+
+**ghostty/** - Ghostty terminal configuration (also consumed by cmux)
+- `.config/ghostty/config`: key-value format
+  - Font: JetBrainsMono Nerd Font (size 13)
+  - Theme: Iceberg Dark (matches wezterm color scheme)
+  - Scrollback: 50M lines
+  - `macos-option-as-alt`: true
 
 **tmux/** - Tmux terminal multiplexer configuration
 

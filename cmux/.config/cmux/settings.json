@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "app": {
+    "language": "system",
+    "appearance": "system",
+    "preferredEditor": "nvim",
+    "openMarkdownInCmuxViewer": true
+  },
+  "automation": {
+    "claudeCodeIntegration": true
+  },
+  "sidebar": {
+    "showPullRequests": true,
+    "openPullRequestLinksInCmuxBrowser": false,
+    "openPortLinksInCmuxBrowser": false
+  },
+  "browser": {
+    "defaultSearchEngine": "google",
+    "openTerminalLinksInCmuxBrowser": false,
+    "interceptTerminalOpenCommandInCmuxBrowser": false
+  }
+}
